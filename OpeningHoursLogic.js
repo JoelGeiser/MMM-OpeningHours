@@ -1,7 +1,5 @@
 function calculateOpeningHours(opening_hours, currentTime) {
-
-    const weekdayNumber = currentTime.weekday();
-
+    let weekdayNumber = currentTime.weekday()+1;
     let closingTime = undefined
     let openingTime = undefined
     let placeIsOpen = false
@@ -9,12 +7,14 @@ function calculateOpeningHours(opening_hours, currentTime) {
     // Closed yesterday?
     if (openingHoursYesterday !== undefined) {
         // Yesterday time still valid?
-        closingTime = openingHoursYesterday.close
-        openingTime = openingHoursYesterday.open
-        placeIsOpen = currentTime.isBetween(openingTime, closingTime)
-        if (placeIsOpen) {
-            return [openingTime, closingTime, placeIsOpen]
-        }
+        openingHoursYesterday.forEach(period => {
+            closingTime = period.close
+            openingTime = period.open
+            placeIsOpen = currentTime.isBetween(openingTime, closingTime)
+            if (placeIsOpen) {
+                return [openingTime, closingTime, placeIsOpen]
+            }
+        })        
     }
 
     // Closed today?
@@ -27,10 +27,14 @@ function calculateOpeningHours(opening_hours, currentTime) {
     }
 
     const openingHoursToday = opening_hours[weekdayNumber]
-    closingTime = openingHoursToday.close
-    openingTime = openingHoursToday.open
-    placeIsOpen = currentTime.isBetween(openingTime, closingTime)
-
+    openingHoursToday.forEach(period => {
+        closingTime = period.close
+        openingTime = period.open
+        placeIsOpen = currentTime.isBetween(openingTime, closingTime)
+        if (placeIsOpen) {
+            return [openingTime, closingTime, placeIsOpen];
+        }
+    }) 
     return [openingTime, closingTime, placeIsOpen];
 }
 

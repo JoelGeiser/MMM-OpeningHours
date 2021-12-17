@@ -117,16 +117,13 @@ Module.register('MMM-OpeningHours', {
           debugLog('Periods parsed: ', JSON.stringify(opening_hours))
 
           const [openingTime, closingTime, placeIsOpen] = calculateOpeningHours(opening_hours, currentTime);
-
-          // Text
-          let openTextCell = openCellTable.insertRow()
-          openTextCell.innerHTML = placeIsOpen ? this.translate('OPEN') : this.translate('CLOSED')
-          openTextCell.className = 'xsmall'
-          openTextCell.style = placeIsOpen ? 'color: green;' : 'color: red;'
-
+      	  
+          // Set background color
+          nameCell.style = placeIsOpen ? 'background: green;' : 'background: red;'
+    		
           // Hours
           let openingHoursCell = openCellTable.insertRow()
-          openingHoursCell.className = 'xsmall'
+          openingHoursCell.className = 'small'
           // Show time until closing/opening
           if (this.config.styling.showTimeUntil) {
             if (placeIsOpen) {

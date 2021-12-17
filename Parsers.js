@@ -29,9 +29,15 @@ function parse_opening_hours(periods) {
   let res = {}
   periods.forEach(period => {
     let p = {}
-    p.close = moment(period.close.time, 'HHmm').weekday(period.close.day)
-    p.open = moment(period.open.time, 'HHmm').weekday(period.open.day)
-    res[period.open.day] = p
+    p.close = moment(period.close.time, 'HHmm').weekday(period.close.day-1)
+    p.open = moment(period.open.time, 'HHmm').weekday(period.open.day-1)
+    
+    // Change code to handle multiple periods per day and return a map with array values:
+    if(res[period.open.day] === undefined) {
+      res[period.open.day] = [p]
+    } else{
+      res[period.open.day].push(p)
+    }     
   })
   return res
 }
