@@ -13,7 +13,7 @@ Module.register('MMM-OpeningHours', {
     timeFormat: config.timeFormat,
     language: config.language,
     styling: {
-      showTimeUntil: true,
+      showTimeUntil: false,
       textAlign: 'center',
       size: 'small'
     },
@@ -29,6 +29,8 @@ Module.register('MMM-OpeningHours', {
         return { sv: 'translations/sv.json' }
       case 'es':
         return { es: 'translations/es.json' }
+      case 'fr':
+        return { es: 'translations/fr.json' }
       default:
         return { en: 'translations/en.json' }
     }
@@ -176,7 +178,7 @@ Module.register('MMM-OpeningHours', {
 })
 
 function debugLog (msg, object) {
-  if (this.config.debug) {
+  if (config.debug) {
     Log.log(
       '[' +
       new Date(Date.now()).toLocaleTimeString() +
